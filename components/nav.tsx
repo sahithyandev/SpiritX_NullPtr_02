@@ -11,6 +11,7 @@ export default function Nav({ title }: NavProps) {
 			<PageTitle>{title || "Hello Sahithyan!"}</PageTitle>
 
 			<ul className="flex gap-4">
+				<NavLink href="/">Home</NavLink>
 				<NavLink href="/players">Players</NavLink>
 			</ul>
 		</nav>

@@ -1,5 +1,4 @@
 import { Card, CardContent } from "@/components/ui/card";
-import type React from "react";
 import {
 	Dialog,
 	DialogContent,
@@ -9,6 +8,7 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import { aOrAn } from "@/lib/utils";
+import type React from "react";
 
 interface PlayerCardProps {
 	data: {
