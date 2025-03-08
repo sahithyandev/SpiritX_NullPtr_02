@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import type React from "react";
 
-export default function LoginPage() {
+export default function SignupPage() {
 	return (
 		<div className="flex gap-6 flex-col items-center justify-center min-h-screen">
 			<div>
@@ -12,7 +12,7 @@ export default function LoginPage() {
 			</div>
 			<Card className="w-full max-w-sm">
 				<CardHeader>
-					<h2 className="text-2xl font-bold">Login</h2>
+					<h2 className="text-2xl font-bold">Sign Up</h2>
 				</CardHeader>
 				<CardContent>
 					<form>
@@ -38,8 +38,22 @@ export default function LoginPage() {
 								className="mt-1 block w-full"
 							/>
 						</div>
+						<div className="mb-6">
+							<label
+								htmlFor="confirm-password"
+								className="block text-sm font-medium"
+							>
+								Confirm Password
+							</label>
+							<Input
+								id="confirm-password"
+								type="password"
+								placeholder="Enter your password"
+								className="mt-1 block w-full"
+							/>
+						</div>
 						<Button type="submit" className="w-full">
-							Login
+							Sign Up
 						</Button>
 					</form>
 				</CardContent>
