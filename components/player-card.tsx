@@ -10,7 +10,7 @@ import {
 import { aOrAn, roundToNearestMultipleOf } from "@/lib/utils";
 import type React from "react";
 
-interface PlayerCardProps {
+export interface PlayerCardProps {
 	data: {
 		balls_faced: number | null;
 		category: string | null;
@@ -114,17 +114,17 @@ export default function PlayerCard({ data, isAdmin = false }: PlayerCardProps) {
 					</CardContent>
 				</Card>
 			</DialogTrigger>
-			<DialogContent>
+			<DialogContent className="text-lg text-foreground">
 				<DialogHeader>
 					<DialogTitle className="text-3xl" asChild>
 						<h2>{data.name}</h2>
 					</DialogTitle>
 				</DialogHeader>
-				<DialogDescription className="text-lg text-foreground">
-					<DetailedPlayerDescription data={data} />
+				<DetailedPlayerDescription data={data} />
 
-					<h3 className="mt-4 mb-2 text-xl">Stats</h3>
-					<table className="w-full player-card-table">
+				<h3 className="mt-4 mb-2 text-xl">Stats</h3>
+				<table className="w-full player-card-table">
+					<tbody>
 						{typeof player_value === "undefined" ? null : (
 							<tr>
 								<td>Player Value</td>
@@ -185,8 +185,8 @@ export default function PlayerCard({ data, isAdmin = false }: PlayerCardProps) {
 							<td>Runs Conceded</td>
 							<td>{data.runs_conceded}</td>
 						</tr>
-					</table>
-				</DialogDescription>
+					</tbody>
+				</table>
 			</DialogContent>
 		</Dialog>
 	);

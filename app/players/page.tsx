@@ -1,5 +1,5 @@
 import Nav from "@/components/nav";
-import PlayerCard from "@/components/player-card";
+import RealtimePlayersSection from "@/components/realtime-players-sectino";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -21,6 +21,7 @@ export default async function Home() {
 		console.log(userError);
 		redirect("/error");
 	}
+
 	const { data: players } = await supabase.from("players").select(`
 		id,
 		name,
@@ -34,9 +35,6 @@ export default async function Home() {
 		innings_played,
 		from_university:universities (name)
 	`);
-	if (players) {
-		console.log(players[0]);
-	}
 
 	return (
 		<main>
@@ -48,15 +46,7 @@ export default async function Home() {
 				</p>
 			) : null}
 
-			<section className="grid grid-cols-1 gap-4 mt-5 md:grid-cols-2 lg:grid-cols-3">
-				{players?.map((player) => (
-					<PlayerCard
-						key={player.id}
-						data={player}
-						isAdmin={userData.is_admin}
-					/>
-				))}
-			</section>
+			{players === null ? null : <RealtimePlayersSection players={players} />}
 		</main>
 	);
 }
