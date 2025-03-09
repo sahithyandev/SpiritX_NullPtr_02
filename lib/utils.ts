@@ -17,3 +17,10 @@ export function aOrAn(phrase: string) {
 	}
 	return "a ".concat(phrase);
 }
+
+export function roundToNearestMultipleOf(
+	value: number,
+	multiple: number,
+): number {
+	return Math.round(value / multiple) * multiple;
+}
