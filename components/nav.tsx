@@ -22,6 +22,7 @@ export default function Nav({ title, isAdmin = false }: NavProps) {
 			<ul className="flex gap-4">
 				<NavLink href="/">Home</NavLink>
 				<NavLink href="/players">Players</NavLink>
+				<NavLink href="/select-your-team">Select Your Team</NavLink>
 				<button
 					className="cursor-pointer hover:underline font-semibold text-lg"
 					type="button"
