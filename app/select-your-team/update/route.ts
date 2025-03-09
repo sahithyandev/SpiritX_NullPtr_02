@@ -7,7 +7,9 @@ export async function POST(request: NextRequest) {
 		!body.selectedPlayers ||
 		!Array.isArray(body.selectedPlayers) ||
 		!body.accountBalance ||
-		typeof body.accountBalance !== "number"
+		typeof body.accountBalance !== "number" ||
+		!body.points ||
+		typeof body.points !== "number"
 	) {
 		return new Response("Bad Request", {
 			status: 400,
@@ -24,25 +26,17 @@ export async function POST(request: NextRequest) {
 	const username = data.user.email.replace("@spirit11.com", "");
 
 	// delete unselected team members
-	const { data: removedOldTeamPlayers, error: error2 } = await supabase
+	const { error: error2 } = await supabase
 		.from("team_members")
 		.delete()
 		.eq("team_owner", username)
-		.not("team_member_id", "in", `(${body.selectedPlayers.join(",")})`)
-		.select();
+		.not("team_member_id", "in", `(${body.selectedPlayers.join(",")})`);
 
 	if (error2) {
 		console.error(error2);
 		return new Response("Internal error occurred", {
 			status: 500,
 		});
-	}
-
-	if (removedOldTeamPlayers) {
-		console.log(removedOldTeamPlayers);
-
-		for (const player of removedOldTeamPlayers) {
-		}
 	}
 
 	// insert other team members
@@ -86,6 +80,7 @@ export async function POST(request: NextRequest) {
 		.from("users")
 		.update({
 			account_balance: body.accountBalance,
+			points: body.points,
 		})
 		.eq("username", username);
 	if (error3) {

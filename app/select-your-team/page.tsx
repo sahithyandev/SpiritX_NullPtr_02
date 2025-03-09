@@ -79,6 +79,7 @@ export default async function SelectYourTeam() {
 				selectedPlayers={selectedPlayers}
 				isAdmin={userData.is_admin}
 				accountBalance={userData.account_balance}
+				points={userData.points}
 			/>
 		</main>
 	);

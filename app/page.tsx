@@ -26,6 +26,15 @@ export default async function Home() {
 		redirect("/error");
 	}
 
+	const { count: teamMembersCount, error: error3 } = await supabase
+		.from("team_members")
+		.select("id", { count: "exact", head: true });
+
+	if (error3) {
+		console.error(error3);
+		redirect("/error");
+	}
+
 	return (
 		<main>
 			<Nav title={`Hello ${username}!`} isAdmin={userData.is_admin} />
@@ -34,7 +43,7 @@ export default async function Home() {
 				<SectionTitle>Your Account</SectionTitle>
 				<div className="flex gap-3">
 					<StatsCard title="Your Balance" value={userData.account_balance} />
-					<StatsCard title="Your Team" value={"0 / 11"} />
+					<StatsCard title="Your Team" value={`${teamMembersCount} / 11`} />
 				</div>
 			</section>
 

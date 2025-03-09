@@ -6,11 +6,13 @@ import SectionTitle from "./section-title";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { StatsCard } from "./stat-card";
+import { redirect } from "next/navigation";
 
 interface Props {
 	groupedPlayers: Array<[string, Array<PlayerCardProps["data"]>]>;
 	selectedPlayers: Array<number>;
 	accountBalance: number;
+	points: number;
 	isAdmin: boolean;
 }
 
@@ -19,6 +21,7 @@ export default function TeamSelectionSection(props: Props) {
 		props.selectedPlayers,
 	);
 	const [accountBalance, setAccountBalance] = useState(props.accountBalance);
+	const [points, setPoints] = useState(props.points);
 
 	const savePlayers = async () => {
 		const response = await fetch("/select-your-team/update", {
@@ -29,10 +32,13 @@ export default function TeamSelectionSection(props: Props) {
 			body: JSON.stringify({
 				selectedPlayers,
 				accountBalance,
+				points,
 			}),
 		});
 		const data = await response.text();
-		console.log(data);
+		if (data === "Success") {
+			redirect("/");
+		}
 	};
 
 	return (
@@ -49,24 +55,33 @@ export default function TeamSelectionSection(props: Props) {
 				if (
 					!(closest instanceof HTMLElement) ||
 					closest.dataset.id === undefined ||
-					closest.dataset.value === undefined
+					closest.dataset.value === undefined ||
+					closest.dataset.points === undefined
 				)
 					return;
 				const id = Number.parseInt(closest.dataset.id, 10);
 				const playerValue = Number.parseInt(closest.dataset.value, 10);
-				if (Number.isNaN(id)) return;
+				const playerPoints = Number.parseInt(closest.dataset.points, 10);
+				if (
+					Number.isNaN(id) ||
+					Number.isNaN(playerValue) ||
+					Number.isNaN(playerPoints)
+				)
+					return;
 
 				const indexOfPlayer = selectedPlayers.indexOf(id);
 				if (indexOfPlayer === -1 && selectedPlayers.length < 11) {
 					// player not already selected
-					setSelectedPlayers([...selectedPlayers, id]);
-					setAccountBalance(accountBalance - playerValue);
+					setSelectedPlayers((selectedPlayers) => [...selectedPlayers, id]);
+					setAccountBalance((accountBalance) => accountBalance - playerValue);
+					setPoints((points) => points + playerPoints);
 				} else if (indexOfPlayer !== -1 && selectedPlayers.length <= 11) {
 					// player already selected
-					setAccountBalance(accountBalance + playerValue);
-					setSelectedPlayers(
+					setAccountBalance((accountBalance) => accountBalance + playerValue);
+					setSelectedPlayers((selectedPlayers) =>
 						selectedPlayers.filter((playerId) => playerId !== id),
 					);
+					setPoints((points) => points - playerPoints);
 				}
 			}}
 		>

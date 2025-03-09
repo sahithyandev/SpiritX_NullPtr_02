@@ -124,6 +124,7 @@ export default function PlayerCard({
 		(9 * player_points + 100) * 1000,
 		50000,
 	);
+	player_points = Math.floor(player_points * 10) / 10;
 
 	if (variant === "normal") {
 		return (
@@ -234,6 +235,7 @@ export default function PlayerCard({
 			className={`w-full mx-auto shadow-lg rounded-lg hover:border-2 border hover:bg-red-200/10 cursor-pointer player-card ${isSelected ? "outline outline-red-300" : ""}`}
 			data-id={data.id}
 			data-value={player_value}
+			data-points={player_points}
 		>
 			<CardContent className="mt-0">
 				<h2 className="text-xl mb-2 font-semibold">{data.name}</h2>
