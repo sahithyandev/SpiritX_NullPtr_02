@@ -24,3 +24,13 @@ export function roundToNearestMultipleOf(
 ): number {
 	return Math.round(value / multiple) * multiple;
 }
+
+export function displayPlayerCategory(category: string) {
+	const words = category.split("_");
+	for (let i = 0; i < words.length; i++) {
+		const word = words[i];
+		words[i] = word.charAt(0).toUpperCase().concat(word.slice(1));
+	}
+
+	return words.join(" ");
+}

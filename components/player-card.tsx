@@ -7,7 +7,11 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import { aOrAn, roundToNearestMultipleOf } from "@/lib/utils";
+import {
+	aOrAn,
+	displayPlayerCategory,
+	roundToNearestMultipleOf,
+} from "@/lib/utils";
 import type React from "react";
 
 export interface PlayerCardProps {
@@ -27,16 +31,6 @@ export interface PlayerCardProps {
 		wickets: number | null;
 	};
 	isAdmin: boolean;
-}
-
-function displayPlayerCategory(category: string) {
-	const words = category.split("_");
-	for (let i = 0; i < words.length; i++) {
-		const word = words[i];
-		words[i] = word.charAt(0).toUpperCase().concat(word.slice(1));
-	}
-
-	return words.join(" ");
 }
 
 function playerDescription(player: PlayerCardProps["data"]): string {
@@ -125,42 +119,46 @@ export default function PlayerCard({ data, isAdmin = false }: PlayerCardProps) {
 				<h3 className="mt-4 mb-2 text-xl">Stats</h3>
 				<table className="w-full player-card-table">
 					<tbody>
-						{typeof player_value === "undefined" ? null : (
-							<tr>
-								<td>Player Value</td>
-								<td>{player_value}</td>
-							</tr>
-						)}
-						{typeof player_points === "undefined" ? null : (
-							<tr>
-								<td>Player Points</td>
-								<td>{Math.floor(10 * player_points) / 10}</td>
-							</tr>
-						)}
-						{typeof batting_strike_rate === "undefined" ? null : (
-							<tr>
-								<td>Batting Strike Rate</td>
-								<td>{Math.floor(10 * batting_strike_rate) / 10}</td>
-							</tr>
-						)}
-						{typeof batting_average === "undefined" ? null : (
-							<tr>
-								<td>Batting Average</td>
-								<td>{Math.floor(10 * batting_average) / 10}</td>
-							</tr>
-						)}
-						{typeof bowling_strike_rate === "undefined" ? null : (
-							<tr>
-								<td>Bowling Strike Rate</td>
-								<td>{Math.floor(10 * bowling_strike_rate) / 10}</td>
-							</tr>
-						)}
-						{typeof economy_rate === "undefined" ? null : (
-							<tr>
-								<td>Economy Rate</td>
-								<td>{Math.floor(10 * economy_rate) / 10}</td>
-							</tr>
-						)}
+						{isAdmin ? (
+							<>
+								{typeof player_value === "undefined" ? null : (
+									<tr>
+										<td>Player Value</td>
+										<td>{player_value}</td>
+									</tr>
+								)}
+								{typeof player_points === "undefined" ? null : (
+									<tr>
+										<td>Player Points</td>
+										<td>{Math.floor(10 * player_points) / 10}</td>
+									</tr>
+								)}
+								{typeof batting_strike_rate === "undefined" ? null : (
+									<tr>
+										<td>Batting Strike Rate</td>
+										<td>{Math.floor(10 * batting_strike_rate) / 10}</td>
+									</tr>
+								)}
+								{typeof batting_average === "undefined" ? null : (
+									<tr>
+										<td>Batting Average</td>
+										<td>{Math.floor(10 * batting_average) / 10}</td>
+									</tr>
+								)}
+								{typeof bowling_strike_rate === "undefined" ? null : (
+									<tr>
+										<td>Bowling Strike Rate</td>
+										<td>{Math.floor(10 * bowling_strike_rate) / 10}</td>
+									</tr>
+								)}
+								{typeof economy_rate === "undefined" ? null : (
+									<tr>
+										<td>Economy Rate</td>
+										<td>{Math.floor(10 * economy_rate) / 10}</td>
+									</tr>
+								)}
+							</>
+						) : null}
 						<tr>
 							<td>Runs</td>
 							<td>{data.total_runs}</td>
