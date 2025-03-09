@@ -130,7 +130,17 @@ export type Database = {
 			[_ in never]: never;
 		};
 		Functions: {
-			[_ in never]: never;
+			tournament_summary: {
+				Args: Record<PropertyKey, never>;
+				Returns: {
+					total_runs: number;
+					total_wickets: number;
+					top_scorer: string;
+					top_scorer_runs: number;
+					top_wicket_taker: string;
+					top_wicket_taker_wickets: number;
+				}[];
+			};
 		};
 		Enums: {
 			[_ in never]: never;

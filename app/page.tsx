@@ -2,6 +2,7 @@ import Leaderboard from "@/components/leaderboard";
 import Nav from "@/components/nav";
 import SectionTitle from "@/components/section-title";
 import { StatsCard } from "@/components/stat-card";
+import TournamentSummary from "@/components/tournament-summary";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import type React from "react";
@@ -38,6 +39,7 @@ export default async function Home() {
 			</section>
 
 			<Leaderboard />
+			{userData.is_admin ? <TournamentSummary /> : null}
 		</main>
 	);
 }
