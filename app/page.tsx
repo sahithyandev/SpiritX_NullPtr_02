@@ -27,7 +27,7 @@ export default async function Home() {
 
 	return (
 		<main>
-			<Nav title={`Hello ${username}!`} />
+			<Nav title={`Hello ${username}!`} isAdmin={userData.is_admin} />
 
 			<section>
 				<SectionTitle>Your Account</SectionTitle>
