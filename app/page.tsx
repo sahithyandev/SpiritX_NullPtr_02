@@ -28,7 +28,8 @@ export default async function Home() {
 
 	const { count: teamMembersCount, error: error3 } = await supabase
 		.from("team_members")
-		.select("id", { count: "exact", head: true });
+		.select("id", { count: "exact", head: true })
+		.eq("team_owner", userData.username);
 
 	if (error3) {
 		console.error(error3);
