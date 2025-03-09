@@ -9,7 +9,7 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-	title: "Spirit11",
+	title: "Spirit11 - NullPtr",
 	description: "Created by team NullPtr for SpiritX 2025",
 };
 
