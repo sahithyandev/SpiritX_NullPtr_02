@@ -1,27 +1,21 @@
-import React, { type PropsWithChildren } from "react";
+import React, {
+	type AnchorHTMLAttributes,
+	type HTMLAttributes,
+	type PropsWithChildren,
+} from "react";
 
-interface NavLinkProps {
-	href: string;
-	className?: string;
-	target?: string;
-	rel?: string;
-}
+interface NavLinkProps
+	extends HTMLAttributes<HTMLAnchorElement>,
+		AnchorHTMLAttributes<HTMLAnchorElement> {}
 
 export default function NavLink({
 	children,
-	href,
 	className,
-	target,
-	rel,
+	...otherProps
 }: PropsWithChildren<NavLinkProps>) {
 	return (
 		<li>
-			<a
-				href={href}
-				className={`text-xl font-semibold ${className}`}
-				target={target}
-				rel={rel}
-			>
+			<a className={`text-lg font-semibold ${className}`} {...otherProps}>
 				{children}
 			</a>
 		</li>

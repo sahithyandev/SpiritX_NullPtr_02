@@ -22,7 +22,7 @@ export type Database = {
 					runs_conceded: number | null;
 					total_runs: number | null;
 					university: number | null;
-					wickets: string | null;
+					wickets: number | null;
 				};
 				Insert: {
 					balls_faced?: number | null;
@@ -36,7 +36,7 @@ export type Database = {
 					runs_conceded?: number | null;
 					total_runs?: number | null;
 					university?: number | null;
-					wickets?: string | null;
+					wickets?: number | null;
 				};
 				Update: {
 					balls_faced?: number | null;
@@ -50,7 +50,7 @@ export type Database = {
 					runs_conceded?: number | null;
 					total_runs?: number | null;
 					university?: number | null;
-					wickets?: string | null;
+					wickets?: number | null;
 				};
 				Relationships: [
 					{
@@ -105,29 +105,23 @@ export type Database = {
 				Row: {
 					account_balance: number;
 					created_at: string;
-					id: number;
 					is_admin: boolean;
-					name: string;
-					password_hash: string;
 					points: number;
+					username: string;
 				};
 				Insert: {
 					account_balance?: number;
 					created_at?: string;
-					id?: number;
 					is_admin?: boolean;
-					name: string;
-					password_hash: string;
 					points?: number;
+					username: string;
 				};
 				Update: {
 					account_balance?: number;
 					created_at?: string;
-					id?: number;
 					is_admin?: boolean;
-					name?: string;
-					password_hash?: string;
 					points?: number;
+					username?: string;
 				};
 				Relationships: [];
 			};
