@@ -67,21 +67,36 @@ export type Database = {
 					created_at: string;
 					id: number;
 					team_member_id: number | null;
-					team_owner: number | null;
+					team_owner: string;
 				};
 				Insert: {
 					created_at?: string;
 					id?: number;
 					team_member_id?: number | null;
-					team_owner?: number | null;
+					team_owner: string;
 				};
 				Update: {
 					created_at?: string;
 					id?: number;
 					team_member_id?: number | null;
-					team_owner?: number | null;
+					team_owner?: string;
 				};
-				Relationships: [];
+				Relationships: [
+					{
+						foreignKeyName: "team_members_team_member_id_fkey";
+						columns: ["team_member_id"];
+						isOneToOne: false;
+						referencedRelation: "players";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "team_members_team_owner_fkey";
+						columns: ["team_owner"];
+						isOneToOne: false;
+						referencedRelation: "users";
+						referencedColumns: ["username"];
+					},
+				];
 			};
 			universities: {
 				Row: {

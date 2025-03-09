@@ -1,8 +1,6 @@
 import Nav from "@/components/nav";
-import PlayerCard from "@/components/player-card";
-import SectionTitle from "@/components/section-title";
+import TeamSelectionSection from "@/components/team-selection-section";
 import { createClient } from "@/lib/supabase/server";
-import { displayPlayerCategory } from "@/lib/utils";
 import { redirect } from "next/navigation";
 
 export default async function SelectYourTeam() {
@@ -43,6 +41,19 @@ export default async function SelectYourTeam() {
 		redirect("/");
 	}
 
+	const { data: _selectedPlayers, error: error3 } = await supabase
+		.from("team_members")
+		.select("team_member_id")
+		.eq("team_owner", username);
+	if (error3) {
+		redirect("/");
+	}
+
+	const selectedPlayers: Array<number> = [];
+	for (const player of _selectedPlayers) {
+		if (player.team_member_id) selectedPlayers.push(player.team_member_id);
+	}
+
 	const groupedPlayers: Record<string, Array<(typeof players)[number]>> = {
 		not_grouped: [],
 	};
@@ -58,40 +69,17 @@ export default async function SelectYourTeam() {
 			groupedPlayers[player.category] = [player];
 		}
 	}
-	console.log(groupedPlayers);
 
 	return (
 		<main>
 			<Nav title={`Hello ${username}!`} isAdmin={userData.is_admin} />
 
-			<section>
-				<div className="flex justify-between items-center">
-					<SectionTitle>Select Your Team</SectionTitle>
-					<span className="text-lg">
-						<b>0 / 11</b> players selected
-					</span>
-				</div>
-
-				{Object.entries(groupedPlayers).map(([category, players]) =>
-					players.length === 0 ? null : (
-						<div key={category}>
-							<h3 className="mt-5 mb-3 text-xl font-semibold">
-								{displayPlayerCategory(category)}
-							</h3>
-
-							<div className="grid grid-cols-1 gap-4 mt-5 md:grid-cols-2 lg:grid-cols-3">
-								{players.map((player) => (
-									<PlayerCard
-										data={player}
-										key={player.id}
-										isAdmin={userData.is_admin}
-									/>
-								))}
-							</div>
-						</div>
-					),
-				)}
-			</section>
+			<TeamSelectionSection
+				groupedPlayers={Object.entries(groupedPlayers)}
+				selectedPlayers={selectedPlayers}
+				isAdmin={userData.is_admin}
+				accountBalance={userData.account_balance}
+			/>
 		</main>
 	);
 }
