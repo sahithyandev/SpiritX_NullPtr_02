@@ -1,3 +1,4 @@
+import Leaderboard from "@/components/leaderboard";
 import Nav from "@/components/nav";
 import SectionTitle from "@/components/section-title";
 import { StatsCard } from "@/components/stat-card";
@@ -12,19 +13,31 @@ export default async function Home() {
 	if (error || !data?.user) {
 		redirect("/auth/login");
 	}
+	const username = data.user.user_metadata.email.replace("@spirit11.com", "");
+	const { data: userData, error: userError } = await supabase
+		.from("users")
+		.select()
+		.eq("username", username)
+		.single();
+
+	if (userError) {
+		console.log(userError);
+		redirect("/error");
+	}
 
 	return (
 		<main>
-			<Nav />
+			<Nav title={`Hello ${username}!`} />
 
 			<section>
 				<SectionTitle>Your Account</SectionTitle>
 				<div className="flex gap-3">
-					<StatsCard title="Your Balance" value={9000000} />
-					<StatsCard title="Your Team" value={"7 / 11"} />
+					<StatsCard title="Your Balance" value={userData.account_balance} />
+					<StatsCard title="Your Team" value={"0 / 11"} />
 				</div>
 			</section>
 
+			<Leaderboard />
 		</main>
 	);
 }

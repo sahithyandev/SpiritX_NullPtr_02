@@ -15,7 +15,10 @@ export default function NavLink({
 }: PropsWithChildren<NavLinkProps>) {
 	return (
 		<li>
-			<a className={`text-lg font-semibold ${className}`} {...otherProps}>
+			<a
+				className={`text-lg font-semibold hover:underline ${className}`}
+				{...otherProps}
+			>
 				{children}
 			</a>
 		</li>

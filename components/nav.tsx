@@ -19,7 +19,7 @@ export default function Nav({ title }: NavProps) {
 				<NavLink href="/">Home</NavLink>
 				<NavLink href="/players">Players</NavLink>
 				<button
-					className="cursor-pointer font-semibold text-lg"
+					className="cursor-pointer hover:underline font-semibold text-lg"
 					type="button"
 					onClick={() => {
 						supabase.auth.signOut();
